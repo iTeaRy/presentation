@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/moon.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>ECMAScript6+</h1>
+				<h3>First experience</h3>
+				<p>
+					<small>Aleh Rudzevich</small>
+				</p>
+			</section>
+			<section>
+				<section>
+					<h1>Constants</h1>
+					<p>Constants are block-scoped, much like variables defined using the let statement. The value of
+						a constant cannot change through reassignment, and it can’t be redeclared.
+					</p>
+				</section>
+				<section>
+					<p>const MY_CONST = 6;</p>
+					<p>console.log(MY_CONST);</p>
+					<p>//12</p>
+					<p>MY_CONST = 8;</p>
+					<p>//Silent error, as we cannot reassign a new value to a constant</p>
+				</section>
+				<section>
+					<h5>In reality, const is not really a constant and it’s not immutable.</h5>
+					<p>const obj = { <br>
+						&ensp;one: 1, <br>
+						&ensp;two: 2<br>
+						};
+					</p>
+
+						<p>
+							// Object mutation is ok<br>
+							// {one: 1, two: 2, three: 3}<br>
+							obj.three = 3;<br><br>
+						</p>
+				</section>
+				<section>
+					<h5>Reassignment doesn't work</h5>
+					<p>
+						// Uncaught TypeError: Assignment to constant variable.<br>
+						obj = {<br>
+						&ensp;one: "bazinga",<br>
+						&ensp;two: "bazinga"<br>
+						};
+					</p>
+				</section>
+			</section>
+			<section>
+				<h4>Block-Scoped Variables</h4>
+				<img src="scope.png">
+			</section>
+			<section>
+				<section>
+					<h2>Arrow function</h2>
+					<img src="statisctic.png">
+				</section>
+				<section>
+					<h4>ECMA Script 5</h4>
+					<p>var add = function(a, b) { <br>
+						&ensp;return a + b;<br>
+						};
+					</p>
+					<h4>ECMA Script 6+</h4>
+					<p>const add = (a, b) => a + b;</p>
+				</section>
+			</section>
+			<section>
+				<h2>Template Literals</h2>
+
+				<h4>ECMA Script 5</h4>
+				<p>var name = 'Your name is ' + first + ' ' + last + '.' <br>
+					var url = 'http://localhost:3000/api/messages/' + id
+				</p>
+				<h4>ECMA Script 6+</h4>
+				<p>let name = `Your name is ${first} ${last}.` <br>
+					let url = `http://localhost:3000/api/messages/${id}`
+				</p>
+			</section>
+			<section>
+				<section>
+					<h2>Classes in ES6</h2>
+					<p>class Person {<br>
+						&ensp;constructor(name) {<br>
+						&emsp;this.name = name;<br>
+						&ensp;}<br>
+						&ensp;describe() {<br>
+						&emsp;return `Person called ${this.name};<br>
+						&ensp;}<br>
+						}
+					</p>
+				</section>
+				<section>
+					<h3>Derived classes</h3>
+					<p>class Employee extends Person { <br>
+						&ensp;constructor(name, title) { <br>
+						&emsp;super(name); <br>
+						&emsp;this.title = title; <br>
+						&ensp;} <br>
+						&ensp;describe() { <br>
+						&emsp;return `${ super.describe() }: ${ this.title }`; <br>
+						&ensp;} <br>
+						}
+					</p>
+				</section>
+			</section>
+			<section>
+				<h3>Modules in ES6</h3>
+				<p>export const port = 3000<br>
+					export function getAccounts(url) {<br>
+					...<br>
+					}<br>
+				</p>
+				<p>import { port, getAccounts } from 'module'<br>
+					console.log(port) // 3000
+				</p>
+			</section>
+			<section>
+				<h3>Promise</h3>
+				<p>const myPromise = new Promise((resolve, reject) => {<br>
+					&ensp;if (Math.random() * 100 <= 90) {<br>
+					&emsp;resolve('Hello, Promises!');<br>
+					&ensp;}<br>
+					&ensp;reject(new Error('In 10% of the cases, I fail. Miserably.'));<br>
+					});<br>
+				</p>
+				
+			</section>
+			<section>
+				<h2>Thanks for attention!</h2>
+
+
+			</section>
+		</div>
+
+	</div>
+
+	<script src="js/reveal.js"></script>
+	<script>
+		// More info https://github.com/hakimel/reveal.js#configuration
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			center: true,
+			hash: true,
+			transition: 'slide',
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+				{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+				{ src: 'plugin/highlight/highlight.js', async: true },
+				{ src: 'plugin/search/search.js', async: true },
+				{ src: 'plugin/zoom-js/zoom.js', async: true },
+				{ src: 'plugin/notes/notes.js', async: true }
+			]
+		});
+	</script>
+	</body>
+</html>
